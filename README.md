@@ -3,7 +3,7 @@ ROS2 Bag file parsing
 
 # Getting started
 
-1. Install ros1 melodic
+1. Install ros1 noetic
 2. Install ros2 foxy
 3. Install rosbag2 packages
 
