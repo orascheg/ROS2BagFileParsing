@@ -21,5 +21,6 @@ ROS2 Bag file parsing
 
     ```bash
     . install/setup.bash
-    ros2 run dev_cpp_pkg dev_cpp_node
+    ros2 run dev_cpp_pkg dev_cpp_node .
     ```
+I have seen problems when opening from different pathes. The program worked when entering the directory where the bag is and referencing with '.'

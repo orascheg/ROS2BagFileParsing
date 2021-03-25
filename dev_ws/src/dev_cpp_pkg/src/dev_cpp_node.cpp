@@ -20,29 +20,33 @@ int main(int argc, char ** argv)
   (void) argc;
   (void) argv;
   
+  if(argc<2)
+  {
+    std::cout << "wrong number of arguments. Usage: " << argv[0] << " <ROS2 bag directory>" << std::endl;
+    return -1;
+  }
+
   rosbag2_cpp::readers::SequentialReader reader;
   rosbag2_cpp::StorageOptions storage_options{};
   
-  storage_options.uri = "../rosbag2_test_data";
+  storage_options.uri = std::string(argv[1]);
   storage_options.storage_id = "sqlite3";
 
   rosbag2_cpp::ConverterOptions converter_options{};
   converter_options.input_serialization_format = "cdr";
   converter_options.output_serialization_format = "cdr";
   reader.open(storage_options, converter_options);
-  
   auto topics = reader.get_all_topics_and_types();
-
-  // about metadata
-  for (auto t:topics){
+  for (auto t:topics)
+  {
     std::cout << "meta name: " << t.name << std::endl;
     std::cout << "meta type: " << t.type << std::endl;
     std::cout << "meta serialization_format: " << t.serialization_format << std::endl;
   }
   
   // read and deserialize "serialized data"
-  if (reader.has_next()){
-
+  while(reader.has_next())
+  {
     // serialized data
     auto serialized_message = reader.read_next();
     
@@ -67,7 +71,8 @@ int main(int argc, char ** argv)
     std::cout << msg.gps_latitude << std::endl;
     std::cout << msg.gps_longitude << std::endl;
     std::cout << msg.gps_height << std::endl;
+    std::cout << msg.gps_qulity << std::endl;
+    std::cout << msg.solution_status << std::endl;
   }
-  
   return 0;
 }
