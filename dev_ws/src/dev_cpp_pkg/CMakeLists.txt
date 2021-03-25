@@ -19,17 +19,17 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(ament_index_cpp REQUIRED)
-find_package(rosbag2 REQUIRED)
+find_package(rosbag2_cpp REQUIRED)
 find_package(rosbag2_storage REQUIRED)
 find_package(rosidl_generator_cpp REQUIRED)
 find_package(rosidl_typesupport_cpp REQUIRED)
 find_package(rosidl_typesupport_introspection_cpp REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(dev_cpp_pkg REQUIRED)
+find_package(rclcpp REQUIRED)
+# find_package(dev_cpp_pkg REQUIRED)
 
-
-rosidl_generate_interfaces(dev_cpp_pkg
+rosidl_generate_interfaces(${PROJECT_NAME}
   msg/GpsRx.msg
   DEPENDENCIES std_msgs
   DEPENDENCIES builtin_interfaces
@@ -41,6 +41,8 @@ include_directories(
 )
 
 add_executable(dev_cpp_node src/dev_cpp_node.cpp)
+rosidl_target_interfaces(dev_cpp_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
+ament_export_dependencies(rosidl_default_runtime)
 
 target_include_directories(dev_cpp_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -53,7 +55,7 @@ install(TARGETS dev_cpp_node
 ament_target_dependencies(
   dev_cpp_node
   "rclcpp"
-  "rosbag2"
+  "rosbag2_cpp"
   "rosbag2_storage"
 )
 
