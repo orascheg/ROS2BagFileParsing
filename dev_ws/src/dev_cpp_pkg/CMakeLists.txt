@@ -26,6 +26,7 @@ find_package(rosidl_typesupport_cpp REQUIRED)
 find_package(rosidl_typesupport_introspection_cpp REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 # find_package(dev_cpp_pkg REQUIRED)
 
@@ -57,6 +58,8 @@ ament_target_dependencies(
   "rclcpp"
   "rosbag2_cpp"
   "rosbag2_storage"
+  std_msgs
+  sensor_msgs
 )
 
 if(BUILD_TESTING)
